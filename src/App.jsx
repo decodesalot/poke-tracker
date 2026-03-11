@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { lazy, Suspense } from "react"
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectUser } from '@features/user/userSlice'
+import { Layout } from './shared'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
+const Onboarding = lazy(() => import('@features/user/Onboarding'))
+const Dashboard = lazy(() => import('@features/dashboard/Dashboard'))
+
+function ProtectedLayout() {
+    const user = useSelector(selectUser)
+
+    if (!user) return null
+
+    if (!user.onboarded) {
+        return <Navigate to="/onboarding" replace />
+    }
+
+    return (
+        <Layout>
+            <Suspense fallback={<div className="d-flex justify-content-center align-items-center" style={{ minHeight: '400px' }}><div className="spinner-border text-primary"></div></div>}>
+                <Outlet />
+            </Suspense>
+        </Layout>
+    )
+}
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/onboarding" element={<Onboarding />} />
+                <Route element={<ProtectedLayout />}>
+                    <Route path="/" element={<Dashboard />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
 export default App

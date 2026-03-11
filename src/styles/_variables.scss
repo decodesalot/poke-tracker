@@ -1,0 +1,62 @@
+// Primary - Indigo (Trust, Intelligence, Interactive)
+$indigo-50: #eef2ff;
+$indigo-100: #e0e7ff;
+$indigo-500: #6b6ddf;
+$indigo-600: #4f46e5;
+$indigo-700: #4338ca;
+$indigo-900: #312e81;
+
+// Secondary - Slate (Neutrals, 60% of UI)
+$slate-50: #f8fafc;
+$slate-100: #f1f5f9;
+$slate-200: #e2e8f0;
+$slate-300: #cbd5e1;
+$slate-500: #64748b;
+$slate-600: #475569;
+$slate-700: #334155;
+$slate-800: #1e293b;
+$slate-900: #0f172a;
+
+// Accent - Teal (CTAs, Highlights, 10% of UI)
+$teal-50: #f0fdfa;
+$teal-400: #2dd4bf;
+$teal-500: #14b8a6;
+$teal-600: #0d9488;
+$teal-700: #0f766e;
+
+// Semantic - Success (Emerald)
+$emerald-50: #ecfdf5;
+$emerald-500: #10b981;
+$emerald-600: #059669;
+$emerald-700: #047857;
+
+// Semantic - Warning (Amber)
+$amber-50: #fffbeb;
+$amber-500: #f59e0b;
+$amber-600: #d97706;
+$amber-700: #b45309;
+
+// Semantic - Error (Red)
+$red-50: #fef2f2;
+$red-500: #ef4444;
+$red-600: #dc2626;
+$red-700: #b91c1c;
+
+// Semantic - Info (Sky)
+$sky-50: #f0f9ff;
+$sky-500: #0ea5e9;
+$sky-600: #0284c7;
+
+// Bootstrap Theme Overrides
+$primary: $indigo-600;
+$secondary: $slate-500;
+$success: $emerald-500;
+$warning: $amber-500;
+$danger: $red-500;
+$info: $sky-500;
+$light: $slate-50;
+$dark: $slate-900;
+
+$card-border-radius: 10px;
+$card-border-color: #e9ecef;
+$offcanvas-title-line-height: 1.6;
