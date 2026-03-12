@@ -2,11 +2,13 @@ import { lazy, Suspense } from "react"
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@features/user/userSlice'
-import { Layout } from './shared'
+import { Layout } from '@shared/components'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 const Onboarding = lazy(() => import('@features/user/Onboarding'))
+const Settings = lazy(() => import('@features/user/Settings'))
 const Dashboard = lazy(() => import('@features/dashboard/Dashboard'))
+
 
 function ProtectedLayout() {
     const user = useSelector(selectUser)
@@ -34,6 +36,7 @@ function App() {
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route element={<ProtectedLayout />}>
                     <Route path="/" element={<Dashboard />} />
+                    <Route path="/settings" element={<Settings />} />
                 </Route>
             </Routes>
         </BrowserRouter>

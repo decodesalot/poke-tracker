@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import Sidebar from './Sidebar'
+import { Sidebar } from '@shared/components'
 import { selectUser } from '@features/user/userSlice'
 
 export default function Layout({ children }) {
@@ -29,7 +29,7 @@ export default function Layout({ children }) {
                     </div>
                 </div>
                 <div className="flex-grow-1 min-vh-100">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top py-3">
+                    <nav className="navbar navbar-expand-lg navbar-light border-bottom sticky-top py-3">
                         <div className="container-fluid">
                             <div className="row flex-grow-1">
                                 <div className="col-9 col-lg-3">
@@ -48,7 +48,7 @@ export default function Layout({ children }) {
                             </div>
                         </div>
                     </nav>
-                    <div className="p-3 p-md-5">
+                    <div className="p-3 p-md-5 bg-light-subtle">
                         {children}
                     </div>
                 </div>

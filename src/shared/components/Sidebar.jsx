@@ -1,11 +1,13 @@
-import { useSelector } from 'react-redux';
-import { selectUser } from '@/features/user/userSlice';
+import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectUser } from '@/features/user/userSlice'
 
 export default function Sidebar() {
-    const user = useSelector(selectUser);
+    const user = useSelector(selectUser)
 
     const menuItems = [
-        { label: 'Dashboard', icon: 'bi-speedometer2', active: true }
+        { path: '/', label: 'Dashboard', icon: 'bi-speedometer2' },
+        { path: '/settings', label: 'Settings', icon: 'bi-gear' }
     ];
 
 
@@ -14,10 +16,10 @@ export default function Sidebar() {
             <ul className="nav nav-pills flex-column mb-auto">
                 {menuItems.map((item) => (
                     <li className="nav-item" key={item.label}>
-                        <a href="#" className={`nav-link gap-3 d-flex align-items-center ${item.active ? 'active' : 'text-dark'}`}>
+                        <NavLink to={item.path} className={({ isActive }) => `nav-link gap-3 d-flex align-items-center ${isActive ? 'active' : ''}`}>
                             <i className={`bi ${item.icon}`}></i>
                             {item.label}
-                        </a>
+                        </NavLink>
                     </li>
                 ))}
             </ul>
