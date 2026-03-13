@@ -3,4 +3,9 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
-/* Sidebar */
+/* Onboarding */
+.onboarding{
+    .card-body{
+        padding: 3.5rem;
+    }
+}

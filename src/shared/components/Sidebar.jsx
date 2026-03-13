@@ -7,9 +7,9 @@ export default function Sidebar() {
 
     const menuItems = [
         { path: '/', label: 'Dashboard', icon: 'bi-speedometer2' },
+        { path: '/binder', label: 'My Binder', icon: 'bi-book' },
         { path: '/settings', label: 'Settings', icon: 'bi-gear' }
     ];
-
 
     return (
         <div className="d-flex flex-column h-100 p-3 flex-fill">

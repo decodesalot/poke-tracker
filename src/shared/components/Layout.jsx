@@ -13,7 +13,7 @@ export default function Layout({ children }) {
 
     return (
         <div className="container-fluid p-0">
-            <div className="d-flex">
+            <div className="d-flex min-vh-100">
                 <div className="offcanvas-lg offcanvas-start sidebar d-lg-flex align-items-stretch border-end vh-100 flex-column" tabindex="-1" id="mobileSidebar" style={{ width: '280px' }}>
                     <div className="offcanvas-header border-bottom d-flex">
                         <h5 className="offcanvas-title">
@@ -28,7 +28,7 @@ export default function Layout({ children }) {
                         <Sidebar />
                     </div>
                 </div>
-                <div className="flex-grow-1 min-vh-100">
+                <div className="flex-grow-1 d-flex flex-column">
                     <nav className="navbar navbar-expand-lg navbar-light border-bottom sticky-top py-3">
                         <div className="container-fluid">
                             <div className="row flex-grow-1">
@@ -48,7 +48,7 @@ export default function Layout({ children }) {
                             </div>
                         </div>
                     </nav>
-                    <div className="p-3 p-md-5 bg-light-subtle">
+                    <div className="p-3 p-md-4 bg-light-subtle flex-grow-1">
                         {children}
                     </div>
                 </div>

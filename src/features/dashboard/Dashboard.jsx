@@ -6,7 +6,7 @@ export default function Dashboard() {
     return (
         <>
             <h1>Dashboard</h1>
-            <h2 className="mt-4">Welcome, {user.name}</h2>
+            <p className="text-muted fs-5 mb-0">Welcome, {user.name}</p>
         </>
     )
 }

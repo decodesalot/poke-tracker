@@ -7,7 +7,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 const Onboarding = lazy(() => import('@features/user/Onboarding'))
 const Settings = lazy(() => import('@features/user/Settings'))
+const Binder = lazy(() => import('@features/user/Binder'))
 const Dashboard = lazy(() => import('@features/dashboard/Dashboard'))
+
 
 
 function ProtectedLayout() {
@@ -37,6 +39,7 @@ function App() {
                 <Route element={<ProtectedLayout />}>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/settings" element={<Settings />} />
+                    <Route path="/binder" element={<Binder />} />
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -5,6 +5,8 @@ import { Card } from '@shared/components'
 
 export default function Settings() {
     const user = useSelector(selectUser)
+
+    // !TODO: handle update state 
     return (
         <div>
             <h1>Settings</h1>
@@ -22,10 +24,10 @@ export default function Settings() {
                                     </div>
                                     <div className="col">
                                         <label className="form-label">Role</label>
-                                        <select class="form-select" name="role" value={user.role} aria-label="User Role" disabled>
+                                        <select className="form-select" name="role" value={user.role} aria-label="User Role" disabled>
                                             {ROLES.map(role => <option key={role.id} value={role.type}>{role.label}</option>)}
                                         </select>
-                                        <p class="text-muted small mt-3 mb-0"><i class="bi bi-info-circle me-1"></i>Contact management to update your role</p>
+                                        <p className="text-muted small mt-2 mb-0"><i className="bi bi-info-circle me-1"></i>Contact management to update your role</p>
                                     </div>
                                 </div>
                             </form>
@@ -40,7 +42,7 @@ export default function Settings() {
                                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                                     <div className="col">
                                         <label className="form-label">Languages</label>
-                                        <select class="form-select" name="languages" value={user.languages} aria-label="Languages">
+                                        <select className="form-select" name="languages" value={user.languages} aria-label="Languages">
                                             <option value="english">English</option>
                                             <option value="spanish">Spanish</option>
                                             <option value="japenese">Japenese</option>
@@ -49,21 +51,21 @@ export default function Settings() {
                                     </div>
                                     <div className="col">
                                         <label className="form-label">Binder Default View</label>
-                                        <select class="form-select" name="binder-view" aria-label="Languages">
+                                        <select className="form-select" name="binder-view" aria-label="Languages">
                                             <option value="grid">Grid</option>
                                             <option value="table">Table</option>
                                         </select>
                                     </div>
                                     <div className="col">
                                         <label className="form-label">Search Default View</label>
-                                        <select class="form-select" name="search-view" aria-label="Search Default View">
+                                        <select className="form-select" name="search-view" aria-label="Search Default View">
                                             <option value="grid">Grid</option>
                                             <option value="table">Table</option>
                                         </select>
                                     </div>
                                     <div className="col">
                                         <label className="form-label">Theme</label>
-                                        <select class="form-select" name="search-view" aria-label="Theme">
+                                        <select className="form-select" name="search-view" aria-label="Theme">
                                             <option value="grid">Light</option>
                                             <option value="table">Dark</option>
                                         </select>
@@ -81,7 +83,7 @@ export default function Settings() {
                                 <div className="row row-cols-4 g-4">
                                     <div className="col">
                                         <label className="form-label">Currency</label>
-                                        <select class="form-select" name="currency" value={user.currency} aria-label="Currency">
+                                        <select className="form-select" name="currency" value={user.currency} aria-label="Currency">
                                             <option value="USD">USD ($)</option>
                                             <option value="EUR">EUR (€)</option>
                                             <option value="GBP">GBP (£)</option>
@@ -90,7 +92,7 @@ export default function Settings() {
                                     </div>
                                     <div className="col">
                                         <label className="form-label">Market</label>
-                                        <select class="form-select" name="binder-view" value={user.market} aria-label="Market">
+                                        <select className="form-select" name="binder-view" value={user.market} aria-label="Market">
                                             <option value="all">View All</option>
                                             <option value="tcgplayer">TCGPlayer (US)</option>
                                             <option value="cardmarket">Cardmarket (EU)</option>
