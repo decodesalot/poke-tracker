@@ -80,7 +80,7 @@ export default function Settings() {
                         title="Data Management"
                         children={<>
                             <form>
-                                <div className="row row-cols-4 g-4">
+                                <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                                     <div className="col">
                                         <label className="form-label">Currency</label>
                                         <select className="form-select" name="currency" value={user.currency} aria-label="Currency">
