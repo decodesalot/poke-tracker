@@ -19,7 +19,7 @@ export default function Layout({ children }) {
                         <h5 className="offcanvas-title">
                             <a href="/" className="d-flex align-items-center me-md-auto text-decoration-none text-dark">
                                 <i className="bi bi-lightning-charge-fill text-warning fs-4 me-2"></i>
-                                <span className="fs-4 fw-bold">PokeTracker</span>
+                                <span className={`fs-4 fw-bold ${theme === 'light' ? 'text-dark' : 'text-white'}`}>PokeTracker</span>
                             </a>
                         </h5>
                         <button type="button" className="btn-close d-flex d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#mobileSidebar" aria-label="Close"></button>

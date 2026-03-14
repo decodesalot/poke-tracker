@@ -3,9 +3,22 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
+[data-bs-theme=dark] {
+    color-scheme: dark;
+    --bs-light-bg-subtle:#15181b;
+    --bs-light-border-subtle: #24252b;
+    --bs-border-color:#24252b;
+    --bs-body-bg: #111417;
+}
+
 /* Onboarding */
 .onboarding{
     .card-body{
         padding: 3.5rem;
     }
+}
+
+/* Global */
+.cursor-pointer {
+  cursor: pointer;
 }

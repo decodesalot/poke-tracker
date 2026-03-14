@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux"
-import { selectUser } from "@features/user/userSlice"
+import { useDispatch, useSelector } from 'react-redux'
+import { selectUser, toggleTheme } from "@features/user/userSlice"
 import { ROLES } from "@constants/roles"
 import { Card } from '@shared/components'
 
 export default function Settings() {
     const user = useSelector(selectUser)
-
+    const dispatch = useDispatch()
     // !TODO: handle update state 
     return (
         <div>
@@ -65,9 +65,9 @@ export default function Settings() {
                                     </div>
                                     <div className="col">
                                         <label className="form-label">Theme</label>
-                                        <select className="form-select" name="search-view" aria-label="Theme">
-                                            <option value="grid">Light</option>
-                                            <option value="table">Dark</option>
+                                        <select className="form-select" name="search-view" aria-label="Theme" value={user.theme} onChange={(e) => dispatch(toggleTheme(e.target.value))}>
+                                            <option value="light">Light</option>
+                                            <option value="dark">Dark</option>
                                         </select>
                                     </div>
                                 </div>

@@ -18,8 +18,8 @@ const userSlice = createSlice({
             state.role = action.payload
         },
 
-        toggleTheme: (state) => {
-            state.theme = state.theme === 'light' ? 'dark' : 'light'
+        toggleTheme: (state, action) => {
+            state.theme = action.payload
         },
 
         setOnboarded: (state, action) => {
