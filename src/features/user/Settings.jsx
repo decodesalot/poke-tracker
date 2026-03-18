@@ -57,12 +57,12 @@ export default function Settings() {
 								<form>
 									<div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
 										<div className="col">
-											<label className="form-label">Languages</label>
+											<label className="form-label">Language</label>
 											<select
 												className="form-select"
-												name="languages"
-												value={user.languages}
-												aria-label="Languages"
+												name="language"
+												value={user.language}
+												aria-label="Language"
 											>
 												<option value="english">English</option>
 												<option value="spanish">Spanish</option>

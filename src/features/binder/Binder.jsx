@@ -1,59 +1,6 @@
+import { useSelector } from 'react-redux'
 import { Card, DataTable } from "@shared/components/"
-// faking it for now..
-const cards = [
-	{
-		id: "base1-4",
-		name: "Charizard",
-		type: "Fire",
-		hp: 120,
-		set: "Base Set",
-		rarity: "Rare Holo",
-		image: "https://assets.tcgdex.net/en/base/base1/4/low.png",
-		quantity: 2,
-		condition: "Near Mint",
-		price: 149.99,
-		total: 299.98,
-	},
-	{
-		id: "base1-58",
-		name: "Pikachu",
-		type: "Electric",
-		hp: 40,
-		set: "Base Set",
-		rarity: "Common",
-		image: "https://assets.tcgdex.net/en/base/base1/58/low.png",
-		quantity: 1,
-		condition: "Excellent",
-		price: 20.99,
-		total: 20.99,
-	},
-	{
-		id: "base1-2",
-		name: "Blastoise",
-		type: "Water",
-		hp: 100,
-		set: "Base Set",
-		rarity: "Rare Holo",
-		image: "https://assets.tcgdex.net/en/base/base1/2/low.png",
-		quantity: 3,
-		condition: "Good",
-		price: 10.99,
-		total: 32.97,
-	},
-	{
-		id: "base1-44",
-		name: "Bulbasaur",
-		type: "Grass",
-		hp: 45,
-		set: "Base Set",
-		rarity: "Common",
-		image: "https://assets.tcgdex.net/en/base/base1/44/low.png",
-		quantity: 1,
-		condition: "Near Mint",
-		price: 5.99,
-		total: 5.99,
-	},
-]
+import { selectBinder } from "./binderSlice"
 
 const columns = [
 	{
@@ -98,9 +45,10 @@ const columns = [
 		label: "Total",
 	},
 ]
-
+ 
 export default function Binder() {
-	// !TODO: add functionality and pull in real data.
+    const cards = useSelector(selectBinder) || []
+	// !TODO: add functionality
 	const handleRowClick = (card) => {
 		console.log("Selected card:", card)
 	}
@@ -124,7 +72,7 @@ export default function Binder() {
 										/>
 									</div>
 									<div className="col">
-										<select class="form-select">
+										<select className="form-select">
 											<option value="name">Sort by Name</option>
 											<option value="type">Sort by Type</option>
 											<option value="rarity">Rarity</option>

@@ -7,8 +7,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js"
 
 const Onboarding = lazy(() => import("@features/user/Onboarding"))
 const Settings = lazy(() => import("@features/user/Settings"))
-const Binder = lazy(() => import("@features/user/Binder"))
+const Binder = lazy(() => import("@features/binder/Binder"))
 const Dashboard = lazy(() => import("@features/dashboard/Dashboard"))
+const Search = lazy(() => import("@features/search/Search"))
+const CardDetail = lazy(() => import("@features/cards/CardDetail"))
 
 function ProtectedLayout() {
 	const user = useSelector(selectUser)
@@ -45,7 +47,9 @@ function App() {
 				<Route element={<ProtectedLayout />}>
 					<Route path="/" element={<Dashboard />} />
 					<Route path="/settings" element={<Settings />} />
+                    <Route path="/search" element={<Search />} />
 					<Route path="/binder" element={<Binder />} />
+                    <Route path="/card/:id" element={<CardDetail />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
