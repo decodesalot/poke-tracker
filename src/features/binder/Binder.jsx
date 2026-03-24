@@ -29,7 +29,7 @@ const columns = [
 		label: "Rarity",
 		render: (card) => <span className="badge bg-secondary">{card?.rarity}</span>,
 	},
-    {
+	{
 		key: "set",
 		label: "Set",
 		render: (card) => <strong>{card?.set.name}</strong>,

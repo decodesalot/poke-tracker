@@ -39,7 +39,7 @@ const searchSlice = createSlice({
 		setSearchQuery: (state, action) => {
 			state.query = action.payload
 		},
-        setSelectedSet: (state, action) => {
+		setSelectedSet: (state, action) => {
 			state.selectedSet = action.payload
 		},
 		addFilter: (state, action) => {
@@ -58,9 +58,9 @@ const searchSlice = createSlice({
 			.addCase(fetchSetsThunk.fulfilled, (state, action) => {
 				state.setsStatus = "succeeded"
 				state.sets = action.payload
-                if (!state.selectedSet) {
-				    state.selectedSet = action.payload[0] ?? null
-                }
+				if (!state.selectedSet) {
+					state.selectedSet = action.payload[0] ?? null
+				}
 			})
 			.addCase(fetchSetsThunk.rejected, (state, action) => {
 				state.setsStatus = "failed"

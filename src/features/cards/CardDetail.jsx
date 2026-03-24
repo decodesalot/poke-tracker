@@ -56,13 +56,12 @@ export default function CardDetail() {
 	const inBinder = cardsInBinder.some((c) => c.id === card?.id)
 
 	const handleAddCard = (card) => {
-        if (inBinder) {
-            dispatch(removeCard(card.id))
-        } else {
-            dispatch(addCard(card))
-        }
-    }
-
+		if (inBinder) {
+			dispatch(removeCard(card.id))
+		} else {
+			dispatch(addCard(card))
+		}
+	}
 
 	return (
 		<>
