@@ -7,6 +7,7 @@ const DEFAULT_USER = {
 	onboarded: false,
 	market: "tcgplayer",
 	currency: "USD",
+	language: "english",
 }
 
 const userSlice = createSlice({
@@ -17,11 +18,11 @@ const userSlice = createSlice({
 			state.role = action.payload
 		},
 
-		toggleTheme: (state, action) => {
+		setTheme: (state, action) => {
 			state.theme = action.payload
 		},
 
-		setOnboarded: (state, action) => {
+		completeOnboarded: (state, action) => {
 			state.onboarded = true
 			Object.assign(state, action.payload)
 		},
@@ -36,7 +37,7 @@ const userSlice = createSlice({
 	},
 })
 
-export const { setRole, toggleTheme, setOnboarded, setUser, setLanguage } = userSlice.actions
+export const { setRole, setTheme, completeOnboarded, setUser, setLanguage } = userSlice.actions
 
 export const selectUser = (state) => state.user
 

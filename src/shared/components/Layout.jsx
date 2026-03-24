@@ -15,8 +15,8 @@ export default function Layout({ children }) {
 		<div className="container-fluid p-0">
 			<div className="d-flex min-vh-100">
 				<div
-					className="offcanvas-lg offcanvas-start sidebar d-lg-flex align-items-stretch border-end vh-100 flex-column"
-					tabindex="-1"
+					className="offcanvas-lg offcanvas-start sidebar d-lg-flex align-items-stretch border-end min-vh-100 flex-column"
+					tabIndex="-1"
 					id="mobileSidebar"
 					style={{ width: "280px" }}
 				>

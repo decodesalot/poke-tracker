@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux"
+import { useNavigate, Link } from "react-router-dom"
 import { Card, DataTable } from "@shared/components/"
 import { selectBinder } from "./binderSlice"
 
@@ -7,7 +8,7 @@ const columns = [
 		key: "image",
 		label: "",
 		className: "w-1",
-		render: (card) => <img src={card.image} alt={card.name} style={{ width: 40 }} />,
+		render: (card) => <img src={`${card.image}/low.webp`} alt={card.name} style={{ width: 40 }} />,
 	},
 	{
 		key: "name",
@@ -15,13 +16,9 @@ const columns = [
 		render: (card) => <strong>{card.name}</strong>,
 	},
 	{
-		key: "set",
-		label: "Set",
-	},
-	{
 		key: "type",
 		label: "Type",
-		render: (card) => <span className="badge bg-primary">{card.type}</span>,
+		render: (card) => <span className="badge bg-primary">{card?.types?.[0]}</span>,
 	},
 	{
 		key: "hp",
@@ -30,32 +27,41 @@ const columns = [
 	{
 		key: "rarity",
 		label: "Rarity",
-		render: (card) => <span className="badge bg-secondary">{card.rarity}</span>,
+		render: (card) => <span className="badge bg-secondary">{card?.rarity}</span>,
+	},
+    {
+		key: "set",
+		label: "Set",
+		render: (card) => <strong>{card?.set.name}</strong>,
 	},
 	{
 		key: "quantity",
 		label: "Qty",
+		render: () => 1,
 	},
 	{
 		key: "price",
 		label: "Price",
+		render: (card) => `${card?.pricing?.cardmarket.avg} USD`, // !TODO: pull in users preference for src & currency type
 	},
 	{
 		key: "total",
 		label: "Total",
+		render: (card) => `${card?.pricing?.cardmarket.avg} USD`,
 	},
 ]
- 
+
 export default function Binder() {
-    const cards = useSelector(selectBinder) || []
-	// !TODO: add functionality
+	const cardsInBinder = useSelector(selectBinder) || []
+	const navigate = useNavigate()
+
 	const handleRowClick = (card) => {
-		console.log("Selected card:", card)
+		navigate(`/card/${card.id}`)
 	}
 	return (
 		<div>
 			<h1>My Binder</h1>
-			<p className="text-muted fs-5 mb-0">Manage and track your cards</p>
+			<p className="text-muted fs-5 mb-0">Manage and track your collection</p>
 			<div className="row mt-4 row-cols-1 g-4">
 				<div className="col">
 					<Card
@@ -111,24 +117,23 @@ export default function Binder() {
 				</div>
 				<div className="col">
 					<Card
-						title="Collection"
+						title="Cards"
 						children={
 							<div className="row">
 								<div className="col">
 									<DataTable
 										columns={columns}
 										className="table-hover"
-										data={cards}
+										data={cardsInBinder}
 										onRowClick={handleRowClick}
 										emptyState={
 											<div className="text-center py-5">
 												<i className="bi bi-book fs-1"></i>
 												<p className="h5 mb-0">Your Binder is Empty</p>
 												<p>Start building your collection by adding cards</p>
-												<a href="#" className="btn btn-primary">
-													{" "}
+												<Link to="/search" className="btn btn-primary">
 													<i className="bi bi-search"></i> Search Cards
-												</a>
+												</Link>
 											</div>
 										}
 									/>

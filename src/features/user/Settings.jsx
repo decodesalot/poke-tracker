@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { selectUser, toggleTheme } from "@features/user/userSlice"
+import { selectUser, setTheme } from "@features/user/userSlice"
 import { ROLES } from "@constants/roles"
 import { Card } from "@shared/components"
 
@@ -66,7 +66,7 @@ export default function Settings() {
 											>
 												<option value="english">English</option>
 												<option value="spanish">Spanish</option>
-												<option value="japenese">Japenese</option>
+												<option value="japanese">Japanese</option>
 												<option value="french">French</option>
 											</select>
 										</div>
@@ -95,7 +95,7 @@ export default function Settings() {
 												name="search-view"
 												aria-label="Theme"
 												value={user.theme}
-												onChange={(e) => dispatch(toggleTheme(e.target.value))}
+												onChange={(e) => dispatch(setTheme(e.target.value))}
 											>
 												<option value="light">Light</option>
 												<option value="dark">Dark</option>

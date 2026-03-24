@@ -1,13 +1,13 @@
 import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
-import { selectUser } from "@/features/user/userSlice"
+import { selectUser } from "@features/user/userSlice"
 
 export default function Sidebar() {
 	const user = useSelector(selectUser)
 
 	const menuItems = [
 		{ path: "/", label: "Dashboard", icon: "bi-speedometer2" },
-        { path: "/search", label: "Search", icon: "bi-files" },
+		{ path: "/search", label: "Search", icon: "bi-files" },
 		{ path: "/binder", label: "My Binder", icon: "bi-book" },
 		{ path: "/settings", label: "Settings", icon: "bi-gear" },
 	]

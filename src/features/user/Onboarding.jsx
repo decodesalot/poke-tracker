@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { ROLES } from "@constants/roles"
-import { setOnboarded } from "@features/user/userSlice"
+import { completeOnboarded } from "@features/user/userSlice"
 import { Card } from "@shared/components"
 
 export default function Onboarding() {
@@ -22,7 +22,7 @@ export default function Onboarding() {
 
 	const handleFormSubmission = (e) => {
 		e.preventDefault()
-		dispatch(setOnboarded(formData))
+		dispatch(completeOnboarded(formData))
 		navigate("/")
 	}
 

@@ -47,9 +47,9 @@ function App() {
 				<Route element={<ProtectedLayout />}>
 					<Route path="/" element={<Dashboard />} />
 					<Route path="/settings" element={<Settings />} />
-                    <Route path="/search" element={<Search />} />
+					<Route path="/search" element={<Search />} />
 					<Route path="/binder" element={<Binder />} />
-                    <Route path="/card/:id" element={<CardDetail />} />
+					<Route path="/card/:id" element={<CardDetail />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
