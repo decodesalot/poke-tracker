@@ -29,7 +29,7 @@ export default function Sidebar() {
 					</li>
 				))}
 			</ul>
-			<div className="dropdown">
+			<div className="dropdown d-md-none">
 				<a
 					href="#"
 					className="d-flex btn btn-light align-items-center text-dark text-decoration-none dropdown-toggle"

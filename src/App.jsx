@@ -7,6 +7,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js"
 
 const Onboarding = lazy(() => import("@features/user/Onboarding"))
 const Settings = lazy(() => import("@features/user/Settings"))
+const Profile = lazy(() => import("@features/user/Profile"))
 const Binder = lazy(() => import("@features/binder/Binder"))
 const Dashboard = lazy(() => import("@features/dashboard/Dashboard"))
 const Search = lazy(() => import("@features/search/Search"))
@@ -49,6 +50,7 @@ function App() {
 					<Route path="/settings" element={<Settings />} />
 					<Route path="/search" element={<Search />} />
 					<Route path="/binder" element={<Binder />} />
+                    <Route path="/profile/:id" element={<Profile />} />
 					<Route path="/card/:id" element={<CardDetail />} />
 				</Route>
 			</Routes>
