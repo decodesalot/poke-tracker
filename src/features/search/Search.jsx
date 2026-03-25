@@ -11,8 +11,13 @@ import {
 	selectSearchResults,
 	selectSearchStatus,
 	setSelectedSet,
+    selectTotalPages,
+    selectPage,
+    nextPage,
+	prevPage,
 } from "./searchSlice"
-import { Card, DataTable } from "@shared/components"
+import { Card, DataTable, Pagination } from "@shared/components"
+import { CARDS_PER_PAGE } from "@shared/constants/binder"
 
 export default function Search() {
 	const cardsInBinder = useSelector(selectBinder) || []
@@ -26,6 +31,11 @@ export default function Search() {
 	const status = useSelector(selectSearchStatus)
 
 	const [selectedSetId, setSelectedSetId] = useState("")
+
+    const page = useSelector(selectPage)
+    const totalPages = useSelector(selectTotalPages)
+    const allCards = results?.cards ?? []
+    const visibleCards = allCards.slice(page * CARDS_PER_PAGE, (page + 1) * CARDS_PER_PAGE)
 
 	useEffect(() => {
 		if (setsStatus === "idle") dispatch(fetchSetsThunk())
@@ -91,7 +101,7 @@ export default function Search() {
 											className="form-select"
 											name="sets"
 											aria-label="Sets"
-											value={selectedSet.id}
+											value={selectedSet?.id}
 											onChange={handleSetChange}
 											disabled={setsStatus === "loading"}
 										>
@@ -219,19 +229,28 @@ export default function Search() {
 											<div className="spinner-border text-primary"></div>
 										</div>
 									) : (
-										<DataTable
-											columns={columns}
-											className="table-hover"
-											data={results.cards ?? []}
-											onRowClick={handleRowClick}
-											emptyState={
-												<div className="text-center py-5">
-													<i className="bi bi-search fs-1"></i>
-													<p className="h5 mb-0">No cards found</p>
-													<p>Try selecting a different set</p>
-												</div>
-											}
-										/>
+                                        <>
+                                            <DataTable
+                                                columns={columns}
+                                                className="table-hover"
+                                                data={visibleCards ?? []}
+                                                onRowClick={handleRowClick}
+                                                emptyState={
+                                                    <div className="text-center py-5">
+                                                        <i className="bi bi-search fs-1"></i>
+                                                        <p className="h5 mb-0">No cards found</p>
+                                                        <p>Try selecting a different set</p>
+                                                    </div>
+                                                }
+                                            />
+                                            <Pagination
+                                                currentPage={page}
+                                                totalPages={totalPages}
+                                                total={allCards.length}
+                                                onPrev={() => dispatch(prevPage())}
+                                                onNext={() => dispatch(nextPage())}
+                                            />
+                                        </>
 									)
 								}
 							/>
