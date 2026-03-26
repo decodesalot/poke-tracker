@@ -50,7 +50,7 @@ function App() {
 					<Route path="/settings" element={<Settings />} />
 					<Route path="/search" element={<Search />} />
 					<Route path="/binder" element={<Binder />} />
-                    <Route path="/profile/:id" element={<Profile />} />
+					<Route path="/profile/:id" element={<Profile />} />
 					<Route path="/card/:id" element={<CardDetail />} />
 				</Route>
 			</Routes>

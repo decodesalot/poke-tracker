@@ -28,7 +28,7 @@ const searchSlice = createSlice({
 	name: "search",
 	initialState: {
 		query: "",
-        currentPage: 0,
+		currentPage: 0,
 		filters: {},
 		sets: [],
 		setsStatus: "idle",
@@ -51,18 +51,18 @@ const searchSlice = createSlice({
 		removeFilter: (state, action) => {
 			delete state.filters[action.payload]
 		},
-        nextPage: (state) => {
-            const total = Math.ceil((state.results.cards?.length ?? 0) / CARDS_PER_PAGE)
-            if (state.currentPage < total - 1) {
+		nextPage: (state) => {
+			const total = Math.ceil((state.results.cards?.length ?? 0) / CARDS_PER_PAGE)
+			if (state.currentPage < total - 1) {
 				state.currentPage++
 			}
-        },
+		},
 
-        prevPage: (state) => {
-            if (state.currentPage > 0) {
-                state.currentPage--
-            }
-        },
+		prevPage: (state) => {
+			if (state.currentPage > 0) {
+				state.currentPage--
+			}
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -95,7 +95,8 @@ const searchSlice = createSlice({
 	},
 })
 
-export const { setSearchQuery, setSelectedSet, addFilter, removeFilter, nextPage, prevPage } = searchSlice.actions
+export const { setSearchQuery, setSelectedSet, addFilter, removeFilter, nextPage, prevPage } =
+	searchSlice.actions
 
 export const selectSets = (state) => state.search.sets
 export const selectSetsStatus = (state) => state.search.setsStatus
@@ -104,6 +105,7 @@ export const selectSearchResults = (state) => state.search.results
 export const selectSearchStatus = (state) => state.search.status
 export const selectSearchError = (state) => state.search.error
 export const selectPage = (state) => state.search.currentPage
-export const selectTotalPages = (state) => Math.ceil((state.search.results.cards?.length ?? 0) / CARDS_PER_PAGE)
+export const selectTotalPages = (state) =>
+	Math.ceil((state.search.results.cards?.length ?? 0) / CARDS_PER_PAGE)
 
 export default searchSlice.reducer

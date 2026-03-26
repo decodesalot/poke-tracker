@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const DEFAULT_USER = {
-    id: crypto.randomUUID(),
+	id: crypto.randomUUID(),
 	name: "Ash Ketchum",
-    email: "demo@email.com",
+	email: "",
 	role: "collector",
 	theme: "light",
 	onboarded: false,
@@ -16,10 +16,6 @@ const userSlice = createSlice({
 	name: "user",
 	initialState: DEFAULT_USER,
 	reducers: {
-		setRole: (state, action) => {
-			state.role = action.payload
-		},
-
 		setTheme: (state, action) => {
 			state.theme = action.payload
 		},
@@ -29,17 +25,13 @@ const userSlice = createSlice({
 			Object.assign(state, action.payload)
 		},
 
-		setUser: (state, action) => {
+		updateSettings: (state, action) => {
 			Object.assign(state, action.payload)
-		},
-
-		setLanguage: (state, action) => {
-			state.language = action.payload
 		},
 	},
 })
 
-export const { setRole, setTheme, completeOnboarded, setUser, setLanguage } = userSlice.actions
+export const { setTheme, completeOnboarded, updateSettings } = userSlice.actions
 
 export const selectUser = (state) => state.user
 export const selectUserId = (state) => state.user.id
