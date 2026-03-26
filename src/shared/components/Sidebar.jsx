@@ -9,6 +9,7 @@ export default function Sidebar() {
 		{ path: "/", label: "Dashboard", icon: "bi-speedometer2" },
 		{ path: "/search", label: "Search", icon: "bi-files" },
 		{ path: "/binder", label: "My Binder", icon: "bi-book" },
+		{ path: "/friends", label: "Friends", icon: "bi-people" },
 		{ path: "/settings", label: "Settings", icon: "bi-gear" },
 	]
 

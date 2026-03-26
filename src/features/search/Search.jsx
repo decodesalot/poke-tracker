@@ -178,7 +178,7 @@ export default function Search() {
 									</div>
 									<div className="col text-md-end">
 										<p className="h3">$876.09</p>
-										<p className="text-muted small mb-0">Current Total Value</p>
+										<p className="text-muted mb-0">Current Total Value</p>
 									</div>
 								</div>
 							</Card>
