@@ -146,7 +146,7 @@ export default function Profile() {
                             columns={columns}
                             className="table-hover"
                             data={visibleCards}
-                            onRowClick={isOwnProfile ? (card) => navigate(`/card/${card.id}`) : undefined}
+                            onRowClick={(card) => navigate(`/card/${card.id}`)}
                             emptyState={
                                 <div className="text-center py-5">
                                     <i className="bi bi-collection fs-1 text-muted"></i>

@@ -1,1 +1,1 @@
-export const CARDS_PER_PAGE = 10
+export const CARDS_PER_PAGE = 12

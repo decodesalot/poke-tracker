@@ -81,10 +81,7 @@ export default function CardDetail() {
                         </button>
                         <button
                             className={`btn ${inBinder ? "btn-outline-danger" : "btn-primary"}`}
-                            onClick={(e) => {
-                                handleAddCard(card)
-                            }}
-                        >
+                            onClick={() => handleAddCard(card)}>
                             {inBinder ? (
                                 <>
                                     <i className="bi bi-x-lg"></i> Remove from Binder
