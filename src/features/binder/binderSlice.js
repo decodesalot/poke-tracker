@@ -44,5 +44,9 @@ export const { addCard, addCards, removeCard, nextPage, prevPage } = binderSlice
 export const selectBinder = (state) => state.binder.cards
 export const selectCurrentPage = (state) => state.binder.currentPage
 export const selectTotalPages = (state) => Math.ceil(state.binder.cards.length / CARDS_PER_PAGE)
+export const selectTotalCards = (state) => state.binder.cards.length
+export const selectUniqueSets = (state) => new Set(state.binder.cards.map((c) => c.set?.id)).size
+export const selectTotalValue = (state) => state.binder.cards.reduce((sum, c) => sum + (c.pricing?.cardmarket?.avg ?? 0), 0)
+export const selectRecentCards = (state) => state.binder.cards.slice(-4).reverse()
 
 export default binderSlice.reducer
