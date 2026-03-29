@@ -15,6 +15,6 @@ export function saveState(state) {
 		const partial = Object.fromEntries(PERSIST_KEYS.map((key) => [key, state[key]]))
 		localStorage.setItem(STORAGE_KEY, JSON.stringify(partial))
 	} catch {
-        console.error('failed saving state in local storage')
-    }
+		console.error("failed saving state in local storage")
+	}
 }

@@ -85,7 +85,10 @@ export default function Layout({ children }) {
 												{name}
 											</strong>
 										</a>
-										<ul className="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser">
+										<ul
+											className="dropdown-menu dropdown-menu-end shadow"
+											aria-labelledby="dropdownUser"
+										>
 											<li>
 												<button
 													className="dropdown-item"
