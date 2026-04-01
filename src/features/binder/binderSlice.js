@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, createSelector } from "@reduxjs/toolkit"
 import { CARDS_PER_PAGE } from "@constants/binder"
 
 const binderSlice = createSlice({
@@ -41,13 +41,21 @@ const binderSlice = createSlice({
 
 export const { addCard, addCards, removeCard, nextPage, prevPage } = binderSlice.actions
 
-export const selectBinder = (state) => state.binder.cards
+const selectCards = (state) => state.binder.cards
+
+export const selectBinder = selectCards
 export const selectCurrentPage = (state) => state.binder.currentPage
-export const selectTotalPages = (state) => Math.ceil(state.binder.cards.length / CARDS_PER_PAGE)
-export const selectTotalCards = (state) => state.binder.cards.length
-export const selectUniqueSets = (state) => new Set(state.binder.cards.map((c) => c.set?.id)).size
-export const selectTotalValue = (state) =>
-	state.binder.cards.reduce((sum, c) => sum + (c.pricing?.cardmarket?.avg ?? 0), 0)
-export const selectRecentCards = (state) => state.binder.cards.slice(-4).reverse()
+export const selectTotalPages = createSelector(selectCards, (cards) =>
+	Math.ceil(cards.length / CARDS_PER_PAGE)
+)
+export const selectTotalCards = createSelector(selectCards, (cards) => cards.length)
+export const selectUniqueSets = createSelector(
+	selectCards,
+	(cards) => new Set(cards.map((c) => c.set?.id)).size
+)
+export const selectTotalValue = createSelector(selectCards, (cards) =>
+	cards.reduce((sum, c) => sum + (c.pricing?.cardmarket?.avg ?? 0), 0)
+)
+export const selectRecentCards = createSelector(selectCards, (cards) => cards.slice(-4).reverse())
 
 export default binderSlice.reducer

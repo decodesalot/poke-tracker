@@ -10,14 +10,14 @@
 	--bs-border-color: #24252b;
 	--bs-body-bg: #111417;
 
-    .btn-light{
-        color: #ffffff;
-        background-color: transparent;
-        border-color: $slate-700;
-        &:hover{
-            background-color: rgba($color: #ffffff, $alpha: .1);
-        }
-    }
+	.btn-light {
+		color: #ffffff;
+		background-color: transparent;
+		border-color: $slate-700;
+		&:hover {
+			background-color: rgba($color: #ffffff, $alpha: 0.1);
+		}
+	}
 }
 
 /* Onboarding */
@@ -34,6 +34,16 @@
 
 .offcanvas-lg {
 	min-width: 280px;
+}
+/* Backgrounds */
+.bg-purple {
+	background: $indigo-600;
+}
+.bg-orange {
+	background: $amber-500;
+}
+.bg-pink {
+	background: $red-50;
 }
 
 /* Profile */

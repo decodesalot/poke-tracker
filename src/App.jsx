@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react"
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { selectUser } from "@features/user/userSlice"
-import { Layout } from "@shared/components"
+import { Layout, LoadingSpinner } from "@shared/components"
 import "bootstrap/dist/js/bootstrap.bundle.min.js"
 
 const Onboarding = lazy(() => import("@features/user/Onboarding"))
@@ -25,16 +25,7 @@ function ProtectedLayout() {
 
 	return (
 		<Layout>
-			<Suspense
-				fallback={
-					<div
-						className="d-flex justify-content-center align-items-center"
-						style={{ minHeight: "400px" }}
-					>
-						<div className="spinner-border text-primary"></div>
-					</div>
-				}
-			>
+			<Suspense fallback={<LoadingSpinner />}>
 				<Outlet />
 			</Suspense>
 		</Layout>

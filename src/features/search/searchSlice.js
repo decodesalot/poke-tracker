@@ -27,41 +27,25 @@ export const fetchCards = createAsyncThunk(
 const searchSlice = createSlice({
 	name: "search",
 	initialState: {
-		query: "",
-		currentPage: 0,
-		filters: {},
 		sets: [],
 		setsStatus: "idle",
 		selectedSet: null,
 		results: [],
 		status: "idle",
 		error: null,
+		currentPage: 0,
 	},
 	reducers: {
-		setSearchQuery: (state, action) => {
-			state.query = action.payload
-		},
 		setSelectedSet: (state, action) => {
 			state.selectedSet = action.payload
-		},
-		addFilter: (state, action) => {
-			const { category, value } = action.payload
-			state.filters[category] = value
-		},
-		removeFilter: (state, action) => {
-			delete state.filters[action.payload]
+			state.currentPage = 0
 		},
 		nextPage: (state) => {
 			const total = Math.ceil((state.results.cards?.length ?? 0) / CARDS_PER_PAGE)
-			if (state.currentPage < total - 1) {
-				state.currentPage++
-			}
+			if (state.currentPage < total - 1) state.currentPage++
 		},
-
 		prevPage: (state) => {
-			if (state.currentPage > 0) {
-				state.currentPage--
-			}
+			if (state.currentPage > 0) state.currentPage--
 		},
 	},
 	extraReducers: (builder) => {
@@ -83,6 +67,7 @@ const searchSlice = createSlice({
 			.addCase(fetchCards.pending, (state) => {
 				state.status = "loading"
 				state.error = null
+				state.currentPage = 0
 			})
 			.addCase(fetchCards.fulfilled, (state, action) => {
 				state.status = "succeeded"
@@ -95,8 +80,7 @@ const searchSlice = createSlice({
 	},
 })
 
-export const { setSearchQuery, setSelectedSet, addFilter, removeFilter, nextPage, prevPage } =
-	searchSlice.actions
+export const { setSelectedSet, nextPage, prevPage } = searchSlice.actions
 
 export const selectSets = (state) => state.search.sets
 export const selectSetsStatus = (state) => state.search.setsStatus

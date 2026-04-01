@@ -9,7 +9,7 @@ import {
 	selectTotalValue,
 } from "@features/binder/binderSlice"
 import { selectFriendById, removeFriend } from "@features/friends/friendsSlice"
-import { Card, DataTable, Pagination, StatCard } from "@shared/components"
+import { Card, DataTable, Pagination, StatCard, EmptyState } from "@shared/components"
 import { CARDS_PER_PAGE } from "@constants/binder"
 
 const columns = [
@@ -71,13 +71,12 @@ export default function Profile() {
 
 	if (!isOwnProfile && !friend) {
 		return (
-			<div className="text-center py-5">
-				<i className="bi bi-person-x fs-1 text-muted"></i>
-				<p className="h5 mt-3 mb-1">Trainer not found</p>
-				<Link to="/friends" className="btn btn-primary mt-2">
-					Back to Friends
-				</Link>
-			</div>
+			<EmptyState
+				icon="bi-person"
+				title="Trainer not found"
+				message="Try selecting a different trainer"
+				cta={{ to: "/friends", icon: "bi-search", label: "Back to Friends" }}
+			/>
 		)
 	}
 

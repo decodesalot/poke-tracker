@@ -15,7 +15,15 @@ import {
 	nextPage,
 	prevPage,
 } from "./searchSlice"
-import { Card, CardGrid, DataTable, Pagination } from "@shared/components"
+import {
+	Card,
+	CardGrid,
+	DataTable,
+	Pagination,
+	EmptyState,
+	ViewToggle,
+	LoadingSpinner,
+} from "@shared/components"
 import { CARDS_PER_PAGE } from "@shared/constants/binder"
 
 export default function Search() {
@@ -177,20 +185,7 @@ export default function Search() {
 										/>
 									</div>
 									<div className="col ms-auto text-end">
-										<div className="btn-group">
-											<button
-												className={`btn ${view === "grid" ? "btn-primary" : "btn-outline-secondary"}`}
-												onClick={() => setView("grid")}
-											>
-												<i className="bi bi-grid"></i>
-											</button>
-											<button
-												className={`btn ${view === "table" ? "btn-primary" : "btn-outline-secondary"}`}
-												onClick={() => setView("table")}
-											>
-												<i className="bi bi-list"></i>
-											</button>
-										</div>
+										<ViewToggle view={view} onChange={setView} />
 									</div>
 								</div>
 							</Card>
@@ -198,19 +193,17 @@ export default function Search() {
 						<div className="col">
 							<Card title="Cards">
 								{status === "loading" ? (
-									<div className="text-center py-5">
-										<div className="spinner-border text-primary"></div>
-									</div>
+									<LoadingSpinner />
 								) : view === "grid" ? (
 									<>
 										<CardGrid
 											cards={visibleCards}
 											emptyState={
-												<div className="text-center py-5">
-													<i className="bi bi-search fs-1"></i>
-													<p className="h5 mb-0">No cards found</p>
-													<p>Try selecting a different set</p>
-												</div>
+												<EmptyState
+													icon="bi-search"
+													title="No cards found"
+													message="Try selecting a different set"
+												/>
 											}
 										/>
 									</>
@@ -222,11 +215,11 @@ export default function Search() {
 											data={visibleCards ?? []}
 											onRowClick={(card) => navigate(`/card/${card.id}`)}
 											emptyState={
-												<div className="text-center py-5">
-													<i className="bi bi-search fs-1"></i>
-													<p className="h5 mb-0">No cards found</p>
-													<p>Try selecting a different set</p>
-												</div>
+												<EmptyState
+													icon="bi-search"
+													title="No cards found"
+													message="Try selecting a different set"
+												/>
 											}
 										/>
 									</>

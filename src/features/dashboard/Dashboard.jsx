@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { selectUser } from "@features/user/userSlice"
 import {
 	selectTotalCards,
@@ -7,7 +7,7 @@ import {
 	selectTotalValue,
 	selectRecentCards,
 } from "@features/binder/binderSlice"
-import { Card, DataTable, StatCard } from "@shared/components"
+import { Card, DataTable, StatCard, EmptyState } from "@shared/components"
 
 const columns = [
 	{
@@ -85,14 +85,12 @@ export default function Dashboard() {
 							data={recentCards}
 							onRowClick={(card) => navigate(`/card/${card.id}`)}
 							emptyState={
-								<div className="text-center py-5">
-									<i className="bi bi-collection fs-1 text-muted"></i>
-									<p className="h5 mt-3 mb-1">Your binder is empty</p>
-									<p className="text-muted">Start building your collection</p>
-									<Link to="/search" className="btn btn-primary">
-										<i className="bi bi-search me-2"></i>Search Cards
-									</Link>
-								</div>
+								<EmptyState
+									icon="bi-book"
+									title="Your binder is empty"
+									message="Start building your collection"
+									cta={{ to: "/search", icon: "bi-search", label: "Search Cards" }}
+								/>
 							}
 						/>
 					</Card>

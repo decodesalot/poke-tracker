@@ -3,30 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchCard, selectCard, selectCardStatus, selectCardError } from "./cardSlice"
 import { addCard, removeCard, selectBinder } from "@features/binder/binderSlice"
-import { Card } from "@shared/components"
-
-const typeColorMap = {
-	Fire: "danger",
-	Water: "info",
-	Grass: "success",
-	Psychic: "purple",
-	Electric: "warning",
-	Colorless: "secondary",
-	Fighting: "orange",
-	Darkness: "dark",
-	Metal: "secondary",
-	Dragon: "info",
-	Fairy: "pink",
-}
-
-const getTypeBadge = (type) => {
-	const color = typeColorMap[type] || "secondary"
-	return (
-		<span key={type} className={`badge bg-${color} me-1`}>
-			{type}
-		</span>
-	)
-}
+import { Card, LoadingSpinner, ErrorState, TypeBadge } from "@shared/components"
 
 const StatItem = ({ label, value }) => (
 	<div className="col">
@@ -48,8 +25,9 @@ export default function CardDetail() {
 		dispatch(fetchCard(id))
 	}, [id, dispatch])
 
-	if (status === "loading") return <div className="spinner-border text-primary"></div>
-	if (status === "failed") return <p className="text-danger">{error}</p>
+	if (status === "loading") return <LoadingSpinner />
+	if (status === "failed")
+		return <ErrorState message={error} onRetry={() => dispatch(fetchCard(id))} />
 	if (!card) return null
 
 	const cm = card.pricing?.cardmarket
@@ -123,8 +101,12 @@ export default function CardDetail() {
 									<StatItem label="Set" value={card.set?.name} />
 									<StatItem label="Illustrator" value={card.illustrator} />
 									<StatItem label="Rarity" value={card.rarity} />
-									<StatItem label="Type" value={card.types?.map(getTypeBadge)} />
-
+									<StatItem
+										label="Type"
+										value={card.types?.map((t) => (
+											<TypeBadge key={t.type || t} type={t.type || t} />
+										))}
+									/>
 									<div className="col">
 										<p className="text-muted small mb-1">Format Legality</p>
 										<div className="d-flex gap-2">
