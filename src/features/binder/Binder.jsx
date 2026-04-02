@@ -5,20 +5,7 @@ import { BinderFilters } from "./components/BinderFilters"
 import { getBinderColumns } from "./utils/binderColumns"
 
 export default function Binder() {
-	const {
-		visibleCards,
-		totalCount,
-		view,
-		setView,
-		currentPage,
-		totalPages,
-		handleNext,
-		handlePrev,
-		navigateToCard,
-		filters,
-		handleFilterChange,
-	} = useBinder()
-
+    const { cards, pagination, filters, view, navigateToCard } = useBinder()
 	const columns = getBinderColumns("USD")
 
 	return (
@@ -29,29 +16,29 @@ export default function Binder() {
 			</header>
 
 			<BinderFilters
-				view={view}
-				setView={setView}
-				filters={filters}
-				onFilterChange={handleFilterChange}
+				view={view.current}
+				setView={view.onChange}
+				filters={filters.values}
+				onFilterChange={filters.onChange}
 			/>
 
 			<Card title="Cards">
-				{view === "grid" ? (
-					<CardGrid cards={visibleCards} emptyState={<BinderEmptyState />} />
+				{view.current === "grid" ? (
+					<CardGrid cards={cards.visible} emptyState={<BinderEmptyState />} />
 				) : (
 					<DataTable
 						columns={columns}
-						data={visibleCards}
+						data={cards.visible}
 						onRowClick={navigateToCard}
 						emptyState={<BinderEmptyState />}
 					/>
 				)}
 				<Pagination
-					currentPage={currentPage}
-					totalPages={totalPages}
-					total={totalCount}
-					onPrev={handlePrev}
-					onNext={handleNext}
+					currentPage={pagination.currentPage}
+					totalPages={pagination.totalPages}
+					total={cards.total}
+					onPrev={pagination.onPrev}
+					onNext={pagination.onNext}
 				/>
 			</Card>
 		</div>

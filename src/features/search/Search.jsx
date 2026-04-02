@@ -1,177 +1,41 @@
-import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import {
-	fetchSetsThunk,
-	fetchCards,
-	selectSets,
-	selectSetsStatus,
-	selectSelectedSet,
-	selectSearchResults,
-	selectSearchStatus,
-	setSelectedSet,
-	selectTotalPages,
-	selectPage,
-	nextPage,
-	prevPage,
-} from "./searchSlice"
 import {
 	Card,
 	CardGrid,
 	DataTable,
 	Pagination,
-	EmptyState,
 	ViewToggle,
 	LoadingSpinner,
 } from "@shared/components"
-import { CARDS_PER_PAGE } from "@shared/constants/binder"
+import { useSearch } from "./hooks/useSearch"
+import { SearchEmptyState } from "./components/SearchEmptyState"
+import { SearchFilters } from "./components/SearchFilters"
+import { SearchSetHeader } from "./components/SearchSetHeader"
+import { getSearchColumns } from "./utils/searchColumns"
 
 export default function Search() {
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
-
-	const sets = useSelector(selectSets)
-	const setsStatus = useSelector(selectSetsStatus)
-	const selectedSet = useSelector(selectSelectedSet)
-	const results = useSelector(selectSearchResults)
-	const status = useSelector(selectSearchStatus)
-	const [view, setView] = useState("grid")
-
-	const page = useSelector(selectPage)
-	const totalPages = useSelector(selectTotalPages)
-	const allCards = results?.cards ?? []
-	const visibleCards = allCards.slice(page * CARDS_PER_PAGE, (page + 1) * CARDS_PER_PAGE)
-
-	useEffect(() => {
-		if (setsStatus === "idle") dispatch(fetchSetsThunk())
-	}, [setsStatus, dispatch])
-
-	useEffect(() => {
-		if (selectedSet) {
-			dispatch(fetchCards(selectedSet.id))
-		}
-	}, [selectedSet, dispatch])
-
-	const handleSetChange = (e) => {
-		const set = sets.find((s) => s.id === e.target.value)
-		dispatch(setSelectedSet(set))
-		dispatch(fetchCards(set.id))
-	}
-
-	const columns = [
-		{
-			key: "image",
-			label: "",
-			className: "w-1",
-			render: (card) => (
-				<img src={`${card.image}/low.webp`} alt={card.name} style={{ width: 40 }} />
-			),
-		},
-		{
-			key: "name",
-			label: "Name",
-			render: (card) => <strong>{card.name}</strong>,
-		},
-	]
+	const { sets, cards, pagination, view, navigateToCard } = useSearch()
+	const columns = getSearchColumns()
 
 	return (
 		<>
-			<h1>Search</h1>
-			<p className="text-muted fs-5 mb-0">Add a card or set to build your collection</p>
+			<header className="mb-4">
+				<h1>Search</h1>
+				<p className="text-muted fs-5 mb-0">Add a card or set to build your collection</p>
+			</header>
+
 			<div className="row mt-5">
 				<div className="col-md-3">
-					<Card>
-						<h3 className="fs-5">Filters</h3>
-						<div className="row row-cols-1 g-3">
-							<div className="col">
-								<label className="form-label">Set</label>
-								<select
-									className="form-select"
-									name="sets"
-									aria-label="Sets"
-									value={selectedSet?.id}
-									onChange={handleSetChange}
-									disabled={setsStatus === "loading"}
-								>
-									{sets.map((s) => (
-										<option key={s.id} value={s.id}>
-											{s.name}
-										</option>
-									))}
-								</select>
-							</div>
-							<div className="col">
-								<label className="form-label">Rarity</label>
-								<select
-									className="form-select"
-									name="rarity"
-									aria-label="Rarity"
-									disabled={setsStatus === "loading"}
-								>
-									<option value="all">All</option>
-									<option value="common">Common</option>
-								</select>
-							</div>
-							<div className="col">
-								<label className="form-label">Sort By</label>
-								<select
-									className="form-select"
-									name="sortBy"
-									aria-label="SortBy"
-									disabled={setsStatus === "loading"}
-								>
-									<option value="name">Name (A-Z)</option>
-									<option value="price-high">Price (High to Low)</option>
-									<option value="price-low">Price (Low to High)</option>
-									<option value="number">Card Number</option>
-								</select>
-							</div>
-							<div className="col">
-								<button className="btn btn-light w-100 mt-4">Clear Filters</button>
-							</div>
-						</div>
-					</Card>
+					<SearchFilters
+						sets={sets.items}
+						selectedSet={sets.selected}
+						setsStatus={sets.status}
+						handleSetChange={sets.onChange}
+					/>
 				</div>
 				<div className="col-md-9">
 					<div className="row row-cols-1 g-4">
 						<div className="col">
-							<Card>
-								<div className="row align-items-center row-cols-2">
-									<div className="col">
-										<div className="d-flex gap-3 align-items-center">
-											{results?.logo && (
-												<img
-													src={`${results.logo}.webp`}
-													alt=""
-													className="img-fluid img-thumbnail p-3"
-													style={{ maxWidth: "120px" }}
-												/>
-											)}
-											<span>
-												<h2 className="mb-2">{results?.name}</h2>
-												<ul className="list-group list-group-horizontal">
-													<li className="list-group-item border-0 ps-0 py-0">
-														<i className="bi bi-collection me-1"></i>
-														{results?.serie?.name}
-													</li>
-													<li className="list-group-item border-0 py-0">
-														<i className="bi bi-calendar me-1"></i>
-														{results?.releaseDate}
-													</li>
-													<li className="list-group-item border-0 py-0">
-														<i className="bi bi-stack me-1"></i>
-														{results?.cardCount?.total} cards
-													</li>
-												</ul>
-											</span>
-										</div>
-									</div>
-									<div className="col text-md-end">
-										<p className="h3">$876.09</p>
-										<p className="text-muted mb-0">Current Total Value</p>
-									</div>
-								</div>
-							</Card>
+							<SearchSetHeader results={cards.results} />
 						</div>
 						<div className="col">
 							<Card>
@@ -185,51 +49,31 @@ export default function Search() {
 										/>
 									</div>
 									<div className="col ms-auto text-end">
-										<ViewToggle view={view} onChange={setView} />
+										<ViewToggle view={view.current} onChange={view.onChange} />
 									</div>
 								</div>
 							</Card>
 						</div>
 						<div className="col">
 							<Card title="Cards">
-								{status === "loading" ? (
+								{cards.status === "loading" ? (
 									<LoadingSpinner />
-								) : view === "grid" ? (
-									<>
-										<CardGrid
-											cards={visibleCards}
-											emptyState={
-												<EmptyState
-													icon="bi-search"
-													title="No cards found"
-													message="Try selecting a different set"
-												/>
-											}
-										/>
-									</>
+								) : view.current === "grid" ? (
+									<CardGrid cards={cards.visible} emptyState={<SearchEmptyState />} />
 								) : (
-									<>
-										<DataTable
-											columns={columns}
-											className="table-hover"
-											data={visibleCards ?? []}
-											onRowClick={(card) => navigate(`/card/${card.id}`)}
-											emptyState={
-												<EmptyState
-													icon="bi-search"
-													title="No cards found"
-													message="Try selecting a different set"
-												/>
-											}
-										/>
-									</>
+									<DataTable
+										columns={columns}
+										data={cards.visible}
+										onRowClick={navigateToCard}
+										emptyState={<SearchEmptyState />}
+									/>
 								)}
 								<Pagination
-									currentPage={page}
-									totalPages={totalPages}
-									total={allCards.length}
-									onPrev={() => dispatch(prevPage())}
-									onNext={() => dispatch(nextPage())}
+									currentPage={pagination.page}
+									totalPages={pagination.totalPages}
+									total={cards.all.length}
+									onPrev={pagination.onPrev}
+									onNext={pagination.onNext}
 								/>
 							</Card>
 						</div>
