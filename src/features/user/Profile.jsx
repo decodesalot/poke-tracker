@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { selectUser, selectUserId } from "@features/user/userSlice"
@@ -10,7 +9,7 @@ import {
 } from "@features/binder/binderSlice"
 import { selectFriendById, removeFriend } from "@features/friends/friendsSlice"
 import { Card, DataTable, Pagination, StatCard, EmptyState } from "@shared/components"
-import { CARDS_PER_PAGE } from "@constants/binder"
+import { usePagination } from "@shared/hooks/usePagination"
 
 const columns = [
 	{
@@ -66,8 +65,22 @@ export default function Profile() {
 	const ownTotalCards = useSelector(selectTotalCards)
 	const ownUniqueSets = useSelector(selectUniqueSets)
 	const ownTotalValue = useSelector(selectTotalValue)
+	const profile = isOwnProfile ? currentUser : friend
+	const binder = isOwnProfile ? ownBinder : friend.binder
 
-	const [currentPage, setCurrentPage] = useState(0)
+	const totalCards = isOwnProfile ? ownTotalCards : binder.length
+	const uniqueSets = isOwnProfile ? ownUniqueSets : new Set(binder.map((c) => c.set?.id)).size
+	const totalValue = isOwnProfile
+		? ownTotalValue
+		: binder.reduce((sum, c) => sum + (c.pricing?.cardmarket?.avg ?? 0), 0)
+
+	const pagination = usePagination(binder)
+	const statValues = [totalCards, uniqueSets, totalValue]
+
+	const handleRemoveFriend = () => {
+		dispatch(removeFriend(id))
+		navigate("/friends")
+	}
 
 	if (!isOwnProfile && !friend) {
 		return (
@@ -78,27 +91,6 @@ export default function Profile() {
 				cta={{ to: "/friends", icon: "bi-search", label: "Back to Friends" }}
 			/>
 		)
-	}
-
-	const profile = isOwnProfile ? currentUser : friend
-	const binder = isOwnProfile ? ownBinder : friend.binder
-
-	const totalCards = isOwnProfile ? ownTotalCards : binder.length
-	const uniqueSets = isOwnProfile ? ownUniqueSets : new Set(binder.map((c) => c.set?.id)).size
-	const totalValue = isOwnProfile
-		? ownTotalValue
-		: binder.reduce((sum, c) => sum + (c.pricing?.cardmarket?.avg ?? 0), 0)
-
-	const totalPages = Math.ceil(binder.length / CARDS_PER_PAGE)
-	const visibleCards = binder.slice(
-		currentPage * CARDS_PER_PAGE,
-		(currentPage + 1) * CARDS_PER_PAGE
-	)
-	const statValues = [totalCards, uniqueSets, totalValue]
-
-	const handleRemoveFriend = () => {
-		dispatch(removeFriend(id))
-		navigate("/friends")
 	}
 
 	return (
@@ -161,21 +153,16 @@ export default function Profile() {
 						<DataTable
 							columns={columns}
 							className="table-hover"
-							data={visibleCards}
+							data={pagination.visible}
 							onRowClick={(card) => navigate(`/card/${card.id}`)}
-							emptyState={
-								<div className="text-center py-5">
-									<i className="bi bi-collection fs-1 text-muted"></i>
-									<p className="h5 mt-3 mb-1">No cards in collection</p>
-								</div>
-							}
+							emptyState={<EmptyState icon="bi-collection" title="No cards in collection" />}
 						/>
 						<Pagination
-							currentPage={currentPage}
-							totalPages={totalPages}
+							currentPage={pagination.page}
+							totalPages={pagination.totalPages}
 							total={binder.length}
-							onPrev={() => setCurrentPage((p) => p - 1)}
-							onNext={() => setCurrentPage((p) => p + 1)}
+							onPrev={pagination.onPrev}
+							onNext={pagination.onNext}
 						/>
 					</Card>
 				</div>

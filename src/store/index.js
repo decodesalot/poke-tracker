@@ -2,8 +2,8 @@ import { configureStore } from "@reduxjs/toolkit"
 import userReducer from "@features/user/userSlice"
 import binderReducer from "@features/binder/binderSlice"
 import searchReducer from "@features/search/searchSlice"
-import cardReducer from "@features/cards/cardSlice"
 import friendsReducer from "@features/friends/friendsSlice"
+import { baseApi } from "@shared/api/baseApi"
 import { loadState, saveState } from "./persistence"
 
 export const store = configureStore({
@@ -11,9 +11,10 @@ export const store = configureStore({
 		user: userReducer,
 		binder: binderReducer,
 		search: searchReducer,
-		card: cardReducer,
 		friends: friendsReducer,
+		[baseApi.reducerPath]: baseApi.reducer,
 	},
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
 	preloadedState: loadState(),
 })
 

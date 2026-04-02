@@ -1,11 +1,11 @@
-import { Card, DataTable, CardGrid, Pagination, ViewToggle } from "@shared/components/"
+import { Card, DataTable, CardGrid, Pagination } from "@shared/components/"
 import { useBinder } from "./hooks/useBinder"
 import { BinderEmptyState } from "./components/BinderEmptyState"
 import { BinderFilters } from "./components/BinderFilters"
 import { getBinderColumns } from "./utils/binderColumns"
 
 export default function Binder() {
-    const { cards, pagination, filters, view, navigateToCard } = useBinder()
+	const { cards, pagination, filters, view, navigateToCard } = useBinder()
 	const columns = getBinderColumns("USD")
 
 	return (

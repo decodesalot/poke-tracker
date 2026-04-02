@@ -1,7 +1,6 @@
-import { useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchCard, selectCard, selectCardStatus, selectCardError } from "./cardSlice"
+import { useGetCardByIdQuery } from "./cardsApi"
 import { addCard, removeCard, selectBinder } from "@features/binder/binderSlice"
 import { Card, LoadingSpinner, ErrorState, TypeBadge } from "@shared/components"
 
@@ -17,17 +16,11 @@ export default function CardDetail() {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const cardsInBinder = useSelector(selectBinder) || []
-	const card = useSelector(selectCard)
-	const status = useSelector(selectCardStatus)
-	const error = useSelector(selectCardError)
 
-	useEffect(() => {
-		dispatch(fetchCard(id))
-	}, [id, dispatch])
+	const { data: card, isLoading, isError, error, refetch } = useGetCardByIdQuery(id)
 
-	if (status === "loading") return <LoadingSpinner />
-	if (status === "failed")
-		return <ErrorState message={error} onRetry={() => dispatch(fetchCard(id))} />
+	if (isLoading) return <LoadingSpinner />
+	if (isError) return <ErrorState message={error?.message} onRetry={refetch} />
 	if (!card) return null
 
 	const cm = card.pricing?.cardmarket

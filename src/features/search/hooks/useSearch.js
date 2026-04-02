@@ -1,63 +1,57 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import {
-	fetchSetsThunk,
-	fetchCards,
-	selectSets,
-	selectSetsStatus,
-	selectSelectedSet,
-	selectSearchResults,
-	selectSearchStatus,
-	setSelectedSet,
-	selectTotalPages,
-	selectPage,
-	nextPage,
-	prevPage,
-} from "../searchSlice"
-import { CARDS_PER_PAGE } from "@shared/constants/binder"
+import { setSelectedSet, selectSelectedSet } from "../searchSlice"
+import { useGetSetsQuery, useGetSetByIdQuery } from "@features/cards/cardsApi"
+import { usePagination } from "@shared/hooks/usePagination"
 
 export const useSearch = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-
-	const sets = useSelector(selectSets)
-	const setsStatus = useSelector(selectSetsStatus)
-	const selectedSet = useSelector(selectSelectedSet)
-	const results = useSelector(selectSearchResults)
-	const status = useSelector(selectSearchStatus)
 	const [view, setView] = useState("grid")
 
-	const page = useSelector(selectPage)
-	const totalPages = useSelector(selectTotalPages)
-	const allCards = results?.cards ?? []
-	const visibleCards = allCards.slice(page * CARDS_PER_PAGE, (page + 1) * CARDS_PER_PAGE)
+	const selectedSet = useSelector(selectSelectedSet)
 
-	const handleNext = () => dispatch(nextPage())
-	const handlePrev = () => dispatch(prevPage())
+	const { data: sets = [], isLoading: setsLoading } = useGetSetsQuery()
+
+	const resolvedSet = selectedSet ?? sets[0] ?? null
+
+	const {
+		data: results,
+		isLoading: cardsLoading,
+		isFetching: cardsFetching,
+	} = useGetSetByIdQuery(resolvedSet?.id, { skip: !resolvedSet?.id })
+
+	const allCards = results?.cards ?? []
+	const pagination = usePagination(allCards)
+	const cardsStatus = cardsLoading || cardsFetching ? "loading" : "succeeded"
 
 	const handleSetChange = (e) => {
 		const set = sets.find((s) => s.id === e.target.value)
-		dispatch(setSelectedSet(set))
-		dispatch(fetchCards(set.id))
+		if (set) dispatch(setSelectedSet(set))
 	}
-
-	useEffect(() => {
-		if (setsStatus === "idle") dispatch(fetchSetsThunk())
-	}, [setsStatus, dispatch])
-
-	useEffect(() => {
-		if (selectedSet) {
-			dispatch(fetchCards(selectedSet.id))
-		}
-	}, [selectedSet, dispatch])
 
 	const navigateToCard = (card) => navigate(`/card/${card.id}`)
 
 	return {
-		sets: { items: sets, status: setsStatus, selected: selectedSet, onChange: handleSetChange },
-		cards: { visible: visibleCards, all: allCards, status, results },
-		pagination: { page, totalPages, onNext: handleNext, onPrev: handlePrev },
+		sets: {
+			items: sets,
+			status: setsLoading ? "loading" : "succeeded",
+			selected: resolvedSet,
+			onChange: handleSetChange,
+		},
+		cards: {
+			visible: pagination.visible,
+			all: allCards,
+			status: cardsStatus,
+			results,
+		},
+		pagination: {
+			page: pagination.page,
+			totalPages: pagination.totalPages,
+			onNext: pagination.onNext,
+			onPrev: pagination.onPrev,
+		},
 		view: { current: view, onChange: setView },
 		navigateToCard,
 	}

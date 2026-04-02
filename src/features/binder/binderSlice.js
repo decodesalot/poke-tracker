@@ -1,11 +1,9 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit"
-import { CARDS_PER_PAGE } from "@constants/binder"
 
 const binderSlice = createSlice({
 	name: "binder",
 	initialState: {
 		cards: [],
-		currentPage: 0,
 	},
 	reducers: {
 		addCard: (state, action) => {
@@ -19,35 +17,15 @@ const binderSlice = createSlice({
 
 		removeCard: (state, action) => {
 			state.cards = state.cards.filter((c) => c.id !== action.payload)
-			const totalPages = Math.ceil(state.cards.length / CARDS_PER_PAGE)
-			if (state.currentPage >= totalPages) {
-				state.currentPage = Math.max(0, totalPages - 1)
-			}
-		},
-
-		nextPage: (state) => {
-			if (state.currentPage < Math.ceil(state.cards.length / CARDS_PER_PAGE) - 1) {
-				state.currentPage++
-			}
-		},
-
-		prevPage: (state) => {
-			if (state.currentPage > 0) {
-				state.currentPage--
-			}
 		},
 	},
 })
 
-export const { addCard, addCards, removeCard, nextPage, prevPage } = binderSlice.actions
+export const { addCard, addCards, removeCard } = binderSlice.actions
 
 const selectCards = (state) => state.binder.cards
 
 export const selectBinder = selectCards
-export const selectCurrentPage = (state) => state.binder.currentPage
-export const selectTotalPages = createSelector(selectCards, (cards) =>
-	Math.ceil(cards.length / CARDS_PER_PAGE)
-)
 export const selectTotalCards = createSelector(selectCards, (cards) => cards.length)
 export const selectUniqueSets = createSelector(
 	selectCards,
