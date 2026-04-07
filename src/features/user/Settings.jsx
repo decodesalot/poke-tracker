@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { selectUser, updateSettings } from "@features/user/userSlice"
 import { ROLES } from "@constants/roles"
-import { Card } from "@shared/components"
+import { Card, PageHeader } from "@shared/components"
 
 export default function Settings() {
 	const user = useSelector(selectUser)
@@ -10,9 +10,8 @@ export default function Settings() {
 	const [name, setName] = useState(user.name)
 
 	return (
-		<div>
-			<h1>Settings</h1>
-			<p className="text-muted fs-5 mb-0">Manage your preferences and data</p>
+		<>
+			<PageHeader title="Settings">Manage your preferences and data</PageHeader>
 			<div className="row mt-4 row-cols-1 g-4">
 				<div className="col">
 					<Card title="Profile">
@@ -112,6 +111,6 @@ export default function Settings() {
 					</Card>
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }

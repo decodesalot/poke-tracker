@@ -5,6 +5,7 @@ import {
 	Pagination,
 	ViewToggle,
 	LoadingSpinner,
+	PageHeader,
 } from "@shared/components"
 import { useSearch } from "./hooks/useSearch"
 import { SearchEmptyState } from "./components/SearchEmptyState"
@@ -18,10 +19,7 @@ export default function Search() {
 
 	return (
 		<>
-			<header className="mb-4">
-				<h1>Search</h1>
-				<p className="text-muted fs-5 mb-0">Add a card or set to build your collection</p>
-			</header>
+			<PageHeader title="Search">Add a card or set to build your collection</PageHeader>
 
 			<div className="row mt-5">
 				<div className="col-md-3">

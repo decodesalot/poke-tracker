@@ -1,4 +1,4 @@
-import { Card, DataTable, CardGrid, Pagination } from "@shared/components/"
+import { Card, DataTable, CardGrid, Pagination, PageHeader } from "@shared/components/"
 import { useBinder } from "./hooks/useBinder"
 import { BinderEmptyState } from "./components/BinderEmptyState"
 import { BinderFilters } from "./components/BinderFilters"
@@ -9,11 +9,8 @@ export default function Binder() {
 	const columns = getBinderColumns("USD")
 
 	return (
-		<div>
-			<header className="mb-4">
-				<h1>My Binder</h1>
-				<p className="text-muted fs-5 mb-0">Manage and track your collection</p>
-			</header>
+		<>
+			<PageHeader title="My Binder">Manage and track your collection</PageHeader>
 
 			<BinderFilters
 				view={view.current}
@@ -41,6 +38,6 @@ export default function Binder() {
 					onNext={pagination.onNext}
 				/>
 			</Card>
-		</div>
+		</>
 	)
 }

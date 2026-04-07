@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { selectFriends } from "./friendsSlice"
-import { Card, EmptyState } from "@shared/components"
+import { Card, EmptyState, PageHeader } from "@shared/components"
 
 export default function Friends() {
 	const navigate = useNavigate()
@@ -9,8 +9,8 @@ export default function Friends() {
 
 	return (
 		<>
-			<h1>Friends</h1>
-			<p className="text-muted fs-5 mb-4">View and manage your friends</p>
+			<PageHeader title="Friends">View and manage your friends</PageHeader>
+
 			{friends.length === 0 ? (
 				<EmptyState
 					icon="bi-people"

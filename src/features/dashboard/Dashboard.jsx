@@ -7,7 +7,7 @@ import {
 	selectTotalValue,
 	selectRecentCards,
 } from "@features/binder/binderSlice"
-import { Card, DataTable, StatCard, EmptyState } from "@shared/components"
+import { Card, DataTable, StatCard, EmptyState, PageHeader } from "@shared/components"
 
 const columns = [
 	{
@@ -62,8 +62,9 @@ export default function Dashboard() {
 
 	return (
 		<>
-			<h1>Dashboard</h1>
-			<p className="text-muted fs-5 mb-4">Welcome back, {user.name}</p>
+			<PageHeader title="Dashboard" className="text-capitalize">
+				Welcome back, {user.name}
+			</PageHeader>
 
 			<div className="row row-cols-1 row-cols-md-3 g-4 mb-4">
 				{STATS.map((stat, i) => (
