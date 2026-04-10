@@ -8,7 +8,7 @@ const DEFAULT_USER = {
 	theme: "light",
 	onboarded: false,
 	market: "tcgplayer",
-	currency: "USD",
+	currency: "EUR",
 	language: "english",
 }
 

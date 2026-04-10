@@ -86,6 +86,7 @@ export default function Settings() {
 									value={user.currency}
 									aria-label="Currency"
 									onChange={(e) => dispatch(updateSettings({ currency: e.target.value }))}
+                                    disabled
 								>
 									<option value="USD">USD ($)</option>
 									<option value="EUR">EUR (€)</option>

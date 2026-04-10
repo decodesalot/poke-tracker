@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useGetCardByIdQuery } from "./cardsApi"
 import { addCard, removeCard, selectBinder } from "@features/binder/binderSlice"
 import { Card, LoadingSpinner, ErrorState, TypeBadge } from "@shared/components"
+import { formatCurrency } from "@shared/utils/formatCurrency"
 
 const StatItem = ({ label, value }) => (
 	<div className="col">
@@ -163,20 +164,23 @@ export default function CardDetail() {
 									<div className="row row-cols-2 row-cols-md-5 g-3 mb-4">
 										<StatItem
 											label="Current Trend"
-											value={`${cm.unit} ${cm["trend-holo"] ?? cm.trend}`}
+											value={`${formatCurrency(cm["trend-holo"], cm.unit) ?? formatCurrency(cm.trend, cm.unit)}`}
 										/>
-										<StatItem label="Low" value={`${cm.unit} ${cm["low-holo"] ?? cm.low}`} />
+										<StatItem
+											label="Low"
+											value={`${formatCurrency(cm["low-holo"], cm.unit) ?? formatCurrency(cm.low, cm.unit)}`}
+										/>
 										<StatItem
 											label="Avg (1 day)"
-											value={`${cm.unit} ${cm["avg1-holo"] ?? cm.avg1}`}
+											value={`${formatCurrency(cm["avg1-holo"], cm.unit) ?? formatCurrency(cm.avg1, cm.unit)}`}
 										/>
 										<StatItem
 											label="Avg (7 day)"
-											value={`${cm.unit} ${cm["avg7-holo"] ?? cm.avg7}`}
+											value={`${formatCurrency(cm["avg7-holo"], cm.unit) ?? formatCurrency(cm.avg7, cm.unit)}`}
 										/>
 										<StatItem
 											label="Avg (30 day)"
-											value={`${cm.unit} ${cm["avg30-holo"] ?? cm.avg30}`}
+											value={`${formatCurrency(cm["avg30-holo"], cm.unit) ?? formatCurrency(cm.avg30, cm.unit)}`}
 										/>
 									</div>
 									<div className="row">

@@ -10,6 +10,7 @@ import {
 import { selectFriendById, removeFriend } from "@features/friends/friendsSlice"
 import { Card, DataTable, Pagination, StatCard, EmptyState } from "@shared/components"
 import { usePagination } from "@shared/hooks/usePagination"
+import { formatCurrency } from "@shared/utils/formatCurrency"
 
 const columns = [
 	{
@@ -41,14 +42,14 @@ const columns = [
 	{
 		key: "price",
 		label: "Est. Value",
-		render: (card) => `$${card?.pricing?.cardmarket?.avg ?? "—"}`,
+		render: (card) => formatCurrency(card?.pricing?.cardmarket?.avg),
 	},
 ]
 
 const STATS = [
 	{ label: "Total Cards", icon: "bi-collection", format: (v) => v },
 	{ label: "Unique Sets", icon: "bi-grid", format: (v) => v },
-	{ label: "Est. Value", icon: "bi-currency-dollar", format: (v) => `$${v.toFixed(2)}` },
+	{ label: "Est. Value", icon: "bi-currency-dollar", format: (v) => formatCurrency(v) },
 ]
 
 export default function Profile() {
@@ -105,9 +106,6 @@ export default function Profile() {
 			<div className="row g-4 mb-4">
 				<div className="col-12">
 					<Card title className="card-profile">
-						<span className="badge bg-secondary text-capitalize position-absolute top-0 end-0 mt-2 me-2">
-							{profile.role}
-						</span>
 						<div className="d-flex align-items-center gap-3 cover">
 							<div className="avatar-lg border border-4 rounded border-white d-flex align-items-center justify-content-center">
 								{profile.avatar ? (
@@ -131,6 +129,28 @@ export default function Profile() {
 									</button>
 								)}
 							</div>
+						</div>
+						<p className="my-4">
+							Gotta catch 'em all! Professional Pokemon card investor focusing on vintage sets.
+						</p>
+						<div className="d-flex gap-3 text-muted small">
+							{profile.location && (
+								<span>
+									<i className="bi bi-geo-alt me-1"></i>Pallet Town
+								</span>
+							)}
+							<span>
+								<i className="bi bi-calendar me-1"></i>Joined{" "}
+								{new Date().toLocaleDateString("en-US", {
+									year: "numeric",
+									month: "long",
+									day: "numeric",
+								})}
+							</span>
+							<span className="text-capitalize">
+								<i className="bi bi-person me-1"></i>
+								{profile.role}
+							</span>
 						</div>
 					</Card>
 				</div>

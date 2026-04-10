@@ -14,7 +14,7 @@ export default function Onboarding() {
 		email: "",
 		role: "collector",
 		market: "tcgplayer",
-		currency: "USD",
+		currency: "EUR",
 	})
 
 	const updateField = (field, value) => {
@@ -153,6 +153,7 @@ export default function Onboarding() {
 													className="form-select"
 													value={formData.currency}
 													onChange={(e) => updateField("currency", e.target.value)}
+                                                    disabled
 												>
 													<option value="USD">USD ($)</option>
 													<option value="EUR">EUR (€)</option>

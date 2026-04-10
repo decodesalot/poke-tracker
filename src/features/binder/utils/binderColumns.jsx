@@ -1,3 +1,11 @@
+import { formatCurrency } from "@shared/utils/formatCurrency"
+
+function getRandomQty(min, max) {
+	const minCeiled = Math.ceil(min)
+	const maxFloored = Math.floor(max)
+	return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)
+}
+const usersQty = getRandomQty(2, 150) // just for now..
 export const getBinderColumns = (currency = "USD") => [
 	{
 		key: "image",
@@ -11,13 +19,9 @@ export const getBinderColumns = (currency = "USD") => [
 		render: (card) => <strong>{card.name}</strong>,
 	},
 	{
-		key: "type",
-		label: "Type",
-		render: (card) => <span className="badge bg-primary">{card?.types?.[0]}</span>,
-	},
-	{
-		key: "hp",
-		label: "HP",
+		key: "set",
+		label: "Set",
+		render: (card) => <strong>{card?.set.name}</strong>,
 	},
 	{
 		key: "rarity",
@@ -25,23 +29,39 @@ export const getBinderColumns = (currency = "USD") => [
 		render: (card) => <span className="badge bg-secondary">{card?.rarity}</span>,
 	},
 	{
-		key: "set",
-		label: "Set",
-		render: (card) => <strong>{card?.set.name}</strong>,
+		key: "condition",
+		label: "Condition",
+		render: (card) => (
+			<select
+				className="form-select form-select-sm"
+				style={{ width: "120px" }}
+				value={card.condition}
+				onClick={(e) => e.stopPropagation()}
+			>
+				<option>Mint</option>
+				<option>Near Mint</option>
+				<option>Excellent</option>
+				<option>Good</option>
+				<option>Played</option>
+			</select>
+		),
 	},
 	{
 		key: "quantity",
 		label: "Qty",
-		render: () => 1,
+		render: () => usersQty,
 	},
 	{
 		key: "price",
 		label: "Price",
-		render: (card) => `${card?.pricing?.cardmarket?.avg} ${currency}`,
+		render: (card) => formatCurrency(card?.pricing?.cardmarket?.avg, card?.pricing?.cardmarket?.unit),
 	},
 	{
 		key: "total",
 		label: "Total",
-		render: (card) => `${card?.pricing?.cardmarket?.avg} USD`,
+		render: (card) =>
+			formatCurrency(
+				card?.pricing?.cardmarket?.avg ? card?.pricing?.cardmarket?.avg * usersQty : null, card?.pricing?.cardmarket?.unit
+			),
 	},
 ]
