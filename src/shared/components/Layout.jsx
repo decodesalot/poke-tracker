@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { Sidebar } from "@shared/components"
+import { AiChat } from "@features/ai/components/AiChat"
 import { selectUser } from "@features/user/userSlice"
 
 export default function Layout({ children }) {
@@ -114,6 +115,7 @@ export default function Layout({ children }) {
 					<div className="p-3 p-md-4 bg-light-subtle flex-grow-1">{children}</div>
 				</div>
 			</div>
+			<AiChat />
 		</div>
 	)
 }

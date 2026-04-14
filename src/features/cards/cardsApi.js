@@ -3,17 +3,15 @@ import { baseApi } from "@shared/api/baseApi"
 export const cardsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getSets: builder.query({
-			query: () => "/sets",
+			query: () => ({ api: "pokemon", url: "/sets" }),
 			providesTags: ["Sets"],
 		}),
 		getSetById: builder.query({
-			query: (setId) => `/sets/${setId}`,
-			//transformResponse: (response) => response.data,
+			query: (setId) => ({ api: "pokemon", url: `/sets/${setId}` }),
 			providesTags: (result, error, id) => [{ type: "Sets", id }],
 		}),
 		getCardById: builder.query({
-			query: (id) => `/cards/${id}`,
-			//transformResponse: (response) => response.data,
+			query: (id) => ({ api: "pokemon", url: `/cards/${id}` }),
 			providesTags: (result, error, id) => [{ type: "Cards", id }],
 		}),
 	}),

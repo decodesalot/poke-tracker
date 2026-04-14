@@ -153,7 +153,7 @@ export default function Onboarding() {
 													className="form-select"
 													value={formData.currency}
 													onChange={(e) => updateField("currency", e.target.value)}
-                                                    disabled
+													disabled
 												>
 													<option value="USD">USD ($)</option>
 													<option value="EUR">EUR (€)</option>

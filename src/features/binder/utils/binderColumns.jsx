@@ -54,14 +54,16 @@ export const getBinderColumns = (currency = "USD") => [
 	{
 		key: "price",
 		label: "Price",
-		render: (card) => formatCurrency(card?.pricing?.cardmarket?.avg, card?.pricing?.cardmarket?.unit),
+		render: (card) =>
+			formatCurrency(card?.pricing?.cardmarket?.avg, card?.pricing?.cardmarket?.unit),
 	},
 	{
 		key: "total",
 		label: "Total",
 		render: (card) =>
 			formatCurrency(
-				card?.pricing?.cardmarket?.avg ? card?.pricing?.cardmarket?.avg * usersQty : null, card?.pricing?.cardmarket?.unit
+				card?.pricing?.cardmarket?.avg ? card?.pricing?.cardmarket?.avg * usersQty : null,
+				card?.pricing?.cardmarket?.unit
 			),
 	},
 ]

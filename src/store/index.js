@@ -3,6 +3,7 @@ import userReducer from "@features/user/userSlice"
 import binderReducer from "@features/binder/binderSlice"
 import searchReducer from "@features/search/searchSlice"
 import friendsReducer from "@features/friends/friendsSlice"
+import aiReducer from "@features/ai/aiSlice"
 import { baseApi } from "@shared/api/baseApi"
 import { loadState, saveState } from "./persistence"
 
@@ -12,6 +13,7 @@ export const store = configureStore({
 		binder: binderReducer,
 		search: searchReducer,
 		friends: friendsReducer,
+		ai: aiReducer,
 		[baseApi.reducerPath]: baseApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),

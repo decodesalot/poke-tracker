@@ -1,21 +1,31 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
-const API_BASE = import.meta.env.VITE_POKEMON_API_BASE
-
-if (!API_BASE || !URL.canParse(API_BASE)) {
-	throw new Error(`Invalid or missing VITE_POKEMON_API_BASE: "${API_BASE}"`)
+const BASE_URLS = {
+	pokemon: import.meta.env.VITE_POKEMON_API_BASE,
+	ai: import.meta.env.VITE_AI_API_BASE,
 }
 
-const rawBaseQuery = fetchBaseQuery({
-	baseUrl: API_BASE,
-	prepareHeaders: (headers) => {
-		headers.set("Content-Type", "application/json")
-		return headers
-	},
-})
+const createQuery = (baseUrl) =>
+	fetchBaseQuery({
+		baseUrl,
+		prepareHeaders: (headers) => {
+			headers.set("Content-Type", "application/json")
+			return headers
+		},
+	})
 
-const baseQueryWithHandling = async (args, api, extraOptions) => {
-	const result = await rawBaseQuery(args, api, extraOptions)
+const queries = Object.fromEntries(
+	Object.entries(BASE_URLS).map(([key, url]) => [key, createQuery(url)])
+)
+
+const routingBaseQuery = async ({ api: apiName, ...args }, api, extraOptions) => {
+	const query = queries[apiName]
+
+	if (!query) {
+		return { error: { status: "CUSTOM_ERROR", error: `Unknown API: "${apiName}"` } }
+	}
+
+	const result = await query(args, api, extraOptions)
 
 	if (result.error) {
 		return {
@@ -33,7 +43,7 @@ const baseQueryWithHandling = async (args, api, extraOptions) => {
 
 export const baseApi = createApi({
 	reducerPath: "api",
-	baseQuery: baseQueryWithHandling,
-	tagTypes: ["Cards", "Sets"], // expand as needed
+	baseQuery: routingBaseQuery,
+	tagTypes: ["Cards", "Sets"],
 	endpoints: () => ({}),
 })
